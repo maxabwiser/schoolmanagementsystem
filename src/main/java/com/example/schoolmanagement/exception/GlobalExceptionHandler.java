@@ -11,17 +11,6 @@ import java.util.Map;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    
-    @ExceptionHandler({
-            IllegalArgumentException.class,
-            InvalidStudentDataException.class,
-            StudentAlreadyExistsException.class
-    })
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public <E extends RuntimeException> Map<String, String> handleBadRequestException(E ex) {
-        log.info("Bad request: {}", ex.getMessage(), ex);
-        return Map.of("error", "badRequest", "message", ex.getMessage());
-    }
 
     @ExceptionHandler(StudentNotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
