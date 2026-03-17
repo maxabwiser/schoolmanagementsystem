@@ -1,6 +1,8 @@
 package com.example.schoolmanagement.student;
 
+import com.example.schoolmanagement.exception.StudentNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -30,10 +33,9 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
+    public Student getStudentById(@PathVariable Long id) {
         return studentRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id: " + id));
     }
 
     @PostMapping
@@ -45,25 +47,22 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> replaceStudent(@PathVariable Long id, @Valid @RequestBody Student request) {
-        return studentRepository.findById(id)
-                .map(existing -> {
-                    existing.setFirstName(request.getFirstName());
-                    existing.setLastName(request.getLastName());
-                    existing.setGradeLevel(request.getGradeLevel());
-                    Student updated = studentRepository.save(existing);
-                    return ResponseEntity.ok(updated);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public Student replaceStudent(@PathVariable Long id, @Valid @RequestBody Student request) {
+        Student existing = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id: " + id));
+
+        existing.setFirstName(request.getFirstName());
+        existing.setLastName(request.getLastName());
+        existing.setGradeLevel(request.getGradeLevel());
+        return studentRepository.save(existing);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStudent(@PathVariable Long id) {
         if (!studentRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new StudentNotFoundException("Student not found with id: " + id);
         }
-
         studentRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
     }
 }
