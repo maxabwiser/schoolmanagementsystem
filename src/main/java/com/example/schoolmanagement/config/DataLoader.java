@@ -18,6 +18,11 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        if (studentRepository.count() > 0) {
+            log.info("Database already has students, skipping seed data");
+            return;
+        }
+
         List<Student> students = List.of(
                 new Student(null, "Ana", "Silva", "Grade 10"),
                 new Student(null, "James", "Smith", "Grade 11"),

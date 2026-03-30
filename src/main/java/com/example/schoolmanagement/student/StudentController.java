@@ -1,5 +1,11 @@
 package com.example.schoolmanagement.student;
 
+import com.example.schoolmanagement.student.dto.request.CreateStudentRequest;
+import com.example.schoolmanagement.student.dto.request.UpdateStudentRequest;
+import com.example.schoolmanagement.student.dto.response.CreateStudentResponse;
+import com.example.schoolmanagement.student.dto.response.GetAllStudentsResponse;
+import com.example.schoolmanagement.student.dto.response.GetStudentResponse;
+import com.example.schoolmanagement.student.dto.response.UpdateStudentResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/students")
@@ -25,25 +30,25 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping
-    public List<Student> getAllStudents() {
+    public GetAllStudentsResponse getAllStudents() {
         return studentService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable Long id) {
+    public GetStudentResponse getStudentById(@PathVariable Long id) {
         return studentService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
-        Student savedStudent = studentService.create(student);
+    public ResponseEntity<CreateStudentResponse> createStudent(@Valid @RequestBody CreateStudentRequest request) {
+        CreateStudentResponse response = studentService.create(request);
         return ResponseEntity
-                .created(URI.create("/v1/api/students/" + savedStudent.getId()))
-                .body(savedStudent);
+                .created(URI.create("/v1/api/students/" + response.getId()))
+                .body(response);
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @Valid @RequestBody Student request) {
+    public UpdateStudentResponse updateStudent(@PathVariable Long id, @Valid @RequestBody UpdateStudentRequest request) {
         return studentService.update(id, request);
     }
 
