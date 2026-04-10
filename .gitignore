@@ -1,8 +1,18 @@
 HELP.md
+
+### Gradle ###
+.gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### Maven (legacy) ###
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+.mvn/
+mvnw
+mvnw.cmd
+pom.xml
+**/pom.xml
 
 ### STS ###
 .apt_generated
@@ -25,9 +35,10 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
+
+### OS ###
+.DS_Store
+

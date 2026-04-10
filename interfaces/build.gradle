@@ -1,0 +1,10 @@
+plugins {
+    id 'java-library'
+}
+
+description = 'API contract - DTOs, exceptions, error models'
+
+dependencies {
+    api 'jakarta.validation:jakarta.validation-api'
+}
+
