@@ -22,6 +22,20 @@ public class GlobalExceptionHandler {
         return ErrorBuilder.build(ex);
     }
 
+    @ExceptionHandler(AuthenticationFailedException.class)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    public ErrorItem handleAuthenticationFailed(AuthenticationFailedException ex) {
+        log.info("Authentication failed: {}", ex.getMessage(), ex);
+        return ErrorBuilder.build(ex);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    public ErrorItem handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        log.info("User already exists: {}", ex.getMessage(), ex);
+        return ErrorBuilder.build(ex);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorItem handleValidationException(MethodArgumentNotValidException ex) {

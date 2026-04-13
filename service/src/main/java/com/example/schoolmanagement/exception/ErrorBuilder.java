@@ -9,6 +9,8 @@ public class ErrorBuilder {
     static {
         exceptionToErrorMap.put(StudentNotFoundException.class, ErrorCode.STUDENT_NOT_FOUND.getCode());
         exceptionToErrorMap.put(IllegalArgumentException.class, ErrorCode.ILLEGAL_ARGUMENT.getCode());
+        exceptionToErrorMap.put(AuthenticationFailedException.class, ErrorCode.AUTHENTICATION_FAILED.getCode());
+        exceptionToErrorMap.put(UserAlreadyExistsException.class, ErrorCode.USER_ALREADY_EXISTS.getCode());
     }
     public static <E extends Exception> ErrorItem build(E ex) {
         return build(ex, Map.of());
