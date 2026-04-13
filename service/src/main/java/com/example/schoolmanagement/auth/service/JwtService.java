@@ -1,4 +1,4 @@
-package com.example.schoolmanagement.auth;
+package com.example.schoolmanagement.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

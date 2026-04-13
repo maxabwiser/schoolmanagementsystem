@@ -1,5 +1,6 @@
-package com.example.schoolmanagement.auth;
+package com.example.schoolmanagement.auth.domain.repository;
 
+import com.example.schoolmanagement.auth.domain.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

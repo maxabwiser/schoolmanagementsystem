@@ -1,6 +1,6 @@
 package com.example.schoolmanagement.config;
 
-import com.example.schoolmanagement.auth.JwtService;
+import com.example.schoolmanagement.auth.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,8 +1,10 @@
-package com.example.schoolmanagement.auth;
+package com.example.schoolmanagement.auth.controller;
 
 import com.example.schoolmanagement.auth.dto.request.LoginRequest;
 import com.example.schoolmanagement.auth.dto.request.RegisterRequest;
 import com.example.schoolmanagement.auth.dto.response.AuthResponse;
+import com.example.schoolmanagement.auth.service.LoginUser;
+import com.example.schoolmanagement.auth.service.RegisterUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,16 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final RegisterUser registerUser;
+    private final LoginUser loginUser;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
-        return authService.register(request);
+        return registerUser.execute(request);
     }
 
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
-        return authService.login(request);
+        return loginUser.execute(request);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.schoolmanagement.student;
+package com.example.schoolmanagement.student.controller;
 
 import com.example.schoolmanagement.student.dto.request.CreateStudentRequest;
 import com.example.schoolmanagement.student.dto.request.UpdateStudentRequest;
@@ -6,6 +6,11 @@ import com.example.schoolmanagement.student.dto.response.CreateStudentResponse;
 import com.example.schoolmanagement.student.dto.response.GetAllStudentsResponse;
 import com.example.schoolmanagement.student.dto.response.GetStudentResponse;
 import com.example.schoolmanagement.student.dto.response.UpdateStudentResponse;
+import com.example.schoolmanagement.student.service.CreateStudent;
+import com.example.schoolmanagement.student.service.DeleteStudent;
+import com.example.schoolmanagement.student.service.GetAllStudents;
+import com.example.schoolmanagement.student.service.GetStudent;
+import com.example.schoolmanagement.student.service.UpdateStudent;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,21 +32,25 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class StudentController {
 
-    private final StudentService studentService;
+    private final CreateStudent createStudent;
+    private final GetStudent getStudent;
+    private final GetAllStudents getAllStudents;
+    private final UpdateStudent updateStudent;
+    private final DeleteStudent deleteStudent;
 
     @GetMapping
     public GetAllStudentsResponse getAllStudents() {
-        return studentService.findAll();
+        return getAllStudents.execute();
     }
 
     @GetMapping("/{id}")
     public GetStudentResponse getStudentById(@PathVariable Long id) {
-        return studentService.findById(id);
+        return getStudent.execute(id);
     }
 
     @PostMapping
     public ResponseEntity<CreateStudentResponse> createStudent(@Valid @RequestBody CreateStudentRequest request) {
-        CreateStudentResponse response = studentService.create(request);
+        CreateStudentResponse response = createStudent.execute(request);
         return ResponseEntity
                 .created(URI.create("/v1/api/students/" + response.getId()))
                 .body(response);
@@ -49,12 +58,12 @@ public class StudentController {
 
     @PutMapping("/{id}")
     public UpdateStudentResponse updateStudent(@PathVariable Long id, @Valid @RequestBody UpdateStudentRequest request) {
-        return studentService.update(id, request);
+        return updateStudent.execute(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStudent(@PathVariable Long id) {
-        studentService.delete(id);
+        deleteStudent.execute(id);
     }
 }

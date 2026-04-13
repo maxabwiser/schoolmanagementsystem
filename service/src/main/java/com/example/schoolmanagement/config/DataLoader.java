@@ -1,7 +1,7 @@
 package com.example.schoolmanagement.config;
 
-import com.example.schoolmanagement.student.Student;
-import com.example.schoolmanagement.student.StudentRepository;
+import com.example.schoolmanagement.student.domain.model.entity.Student;
+import com.example.schoolmanagement.student.domain.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -35,4 +35,3 @@ public class DataLoader implements CommandLineRunner {
         log.info("Loaded {} students into the database", students.size());
     }
 }
-

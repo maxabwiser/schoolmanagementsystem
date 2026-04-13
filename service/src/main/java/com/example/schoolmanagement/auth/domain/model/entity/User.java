@@ -1,5 +1,6 @@
-package com.example.schoolmanagement.auth;
+package com.example.schoolmanagement.auth.domain.model.entity;
 
+import com.example.schoolmanagement.auth.domain.model.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

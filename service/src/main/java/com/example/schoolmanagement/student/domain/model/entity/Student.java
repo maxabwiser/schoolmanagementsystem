@@ -1,4 +1,4 @@
-package com.example.schoolmanagement.student;
+package com.example.schoolmanagement.student.domain.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

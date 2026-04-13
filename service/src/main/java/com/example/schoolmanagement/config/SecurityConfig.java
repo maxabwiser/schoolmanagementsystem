@@ -1,6 +1,6 @@
 package com.example.schoolmanagement.config;
 
-import com.example.schoolmanagement.auth.UserRepository;
+import com.example.schoolmanagement.auth.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
